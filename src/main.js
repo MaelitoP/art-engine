@@ -19,8 +19,6 @@ const {
   text,
   namePrefix,
   network,
-  solanaMetadata,
-  gif,
 } = require(`${basePath}/src/config.js`)
 const canvas = createCanvas(format.width, format.height)
 const ctx = canvas.getContext('2d')
@@ -29,20 +27,14 @@ var metadataList = []
 var attributesList = []
 var dnaList = new Set()
 const DNA_DELIMITER = '-'
-const HashlipsGiffer = require(`${basePath}/modules/HashlipsGiffer.js`)
-
-let hashlipsGiffer = null
 
 const buildSetup = () => {
   if (fs.existsSync(buildDir)) {
-    fs.rmdirSync(buildDir, { recursive: true })
+    fs.rmSync(buildDir, { recursive: true })
   }
   fs.mkdirSync(buildDir)
   fs.mkdirSync(`${buildDir}/json`)
   fs.mkdirSync(`${buildDir}/images`)
-  if (gif.export) {
-    fs.mkdirSync(`${buildDir}/gifs`)
-  }
 }
 
 const getRarityWeight = (_str) => {
@@ -63,7 +55,10 @@ const cleanDna = (_str) => {
 
 const cleanName = (_str) => {
   let nameWithoutExtension = _str.slice(0, -4)
-  return nameWithoutExtension.split(rarityDelimiter).shift()
+  let nameWithoutRarity = nameWithoutExtension.split(rarityDelimiter).shift()
+  return nameWithoutRarity
+    .split('. ')
+    .map((e) => e.charAt(0).toUpperCase() + e.substring(1).toLowerCase())[0]
 }
 
 const getElements = (path) => {
@@ -73,7 +68,7 @@ const getElements = (path) => {
     .map((i, index) => {
       if (i.includes('-')) {
         console.log(i)
-        throw new Error(`layer name can not contain dashes, please fix: ${i}`)
+        throw new Error('Layer name can not contain dashes, please fix:', i)
       }
       return {
         id: index,
@@ -110,15 +105,14 @@ const layersSetup = (layersOrder) => {
 
 const saveImage = (_editionCount) => {
   fs.writeFileSync(
-    `${buildDir}/images/${_editionCount}.png`,
+    `${buildDir}/images/JRS_${_editionCount}.png`,
     canvas.toBuffer('image/png'),
   )
 }
 
 const genColor = () => {
   let hue = Math.floor(Math.random() * 360)
-  let pastel = `hsl(${hue}, 100%, ${background.brightness})`
-  return pastel
+  return `hsl(${hue}, 100%, ${background.brightness})`
 }
 
 const drawBackground = () => {
@@ -137,33 +131,6 @@ const addMetadata = (_dna, _edition) => {
     date: dateTime,
     ...extraMetadata,
     attributes: attributesList,
-    compiler: 'HashLips Art Engine',
-  }
-  if (network == NETWORK.sol) {
-    tempMetadata = {
-      //Added metadata for solana
-      name: tempMetadata.name,
-      symbol: solanaMetadata.symbol,
-      description: tempMetadata.description,
-      //Added metadata for solana
-      seller_fee_basis_points: solanaMetadata.seller_fee_basis_points,
-      image: `${_edition}.png`,
-      //Added metadata for solana
-      external_url: solanaMetadata.external_url,
-      edition: _edition,
-      ...extraMetadata,
-      attributes: tempMetadata.attributes,
-      properties: {
-        files: [
-          {
-            uri: `${_edition}.png`,
-            type: 'image/png',
-          },
-        ],
-        category: 'image',
-        creators: solanaMetadata.creators,
-      },
-    }
   }
   metadataList.push(tempMetadata)
   attributesList = []
@@ -172,7 +139,7 @@ const addMetadata = (_dna, _edition) => {
 const addAttributes = (_element) => {
   let selectedElement = _element.layer.selectedElement
   attributesList.push({
-    trait_type: _element.layer.name,
+    name: _element.layer.name,
     value: selectedElement.name,
   })
 }
@@ -365,19 +332,9 @@ const startCreating = async () => {
         })
 
         await Promise.all(loadedElements).then((renderObjectArray) => {
-          debugLogs ? console.log('Clearing canvas') : null
+          if (debugLogs) console.log('Clearing canvas')
+
           ctx.clearRect(0, 0, format.width, format.height)
-          if (gif.export) {
-            hashlipsGiffer = new HashlipsGiffer(
-              canvas,
-              ctx,
-              `${buildDir}/gifs/${abstractedIndexes[0]}.gif`,
-              gif.repeat,
-              gif.quality,
-              gif.delay,
-            )
-            hashlipsGiffer.start()
-          }
           if (background.generate) {
             drawBackground()
           }
@@ -387,19 +344,15 @@ const startCreating = async () => {
               index,
               layerConfigurations[layerConfigIndex].layersOrder.length,
             )
-            if (gif.export) {
-              hashlipsGiffer.add()
-            }
           })
-          if (gif.export) {
-            hashlipsGiffer.stop()
-          }
-          debugLogs
-            ? console.log('Editions left to create: ', abstractedIndexes)
-            : null
+
+          if (debugLogs)
+            console.log('Editions left to create: ', abstractedIndexes)
+
           saveImage(abstractedIndexes[0])
           addMetadata(newDna, abstractedIndexes[0])
           saveMetaDataSingleFile(abstractedIndexes[0])
+
           console.log(
             `Created edition: ${abstractedIndexes[0]}, with DNA: ${sha1(
               newDna,

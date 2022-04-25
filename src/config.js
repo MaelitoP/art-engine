@@ -2,28 +2,17 @@ const basePath = process.cwd()
 const { MODE } = require(`${basePath}/constants/blend_mode.js`)
 const { NETWORK } = require(`${basePath}/constants/network.js`)
 
+// Catch Network type for metadata
 const network = NETWORK.eth
 
 // General metadata for Ethereum
-const namePrefix = 'Your Collection'
-const description = 'Remember to replace this description'
-const baseUri = 'ipfs://NewUriToReplace'
-
-const solanaMetadata = {
-  symbol: 'YC',
-  seller_fee_basis_points: 1000, // Define how much % you want from secondary market sales 1000 = 10%
-  external_url: 'https://www.youtube.com/c/hashlipsnft',
-  creators: [
-    {
-      address: '7fXNuer5sbZtaTEPhtJ5g5gNtuyRoKkvxdjEjEnPN4mC',
-      share: 100,
-    },
-  ],
-}
+const namePrefix = 'JRS'
+const description = "Generated JRS Collection of 4848 NFT's"
+const baseUri = 'ipfs://'
 
 const layerConfigurations = [
   {
-    growEditionSizeTo: 10,
+    growEditionSizeTo: 5,
     layersOrder: [
       { name: 'Background' },
       { name: 'Skeleton' },
@@ -48,13 +37,6 @@ const format = {
   width: 4000,
   height: 4000,
   smoothing: false,
-}
-
-const gif = {
-  export: false,
-  repeat: 0,
-  quality: 100,
-  delay: 500,
 }
 
 const text = {
@@ -94,15 +76,6 @@ const preview = {
   imageName: 'preview.png',
 }
 
-const preview_gif = {
-  numberOfImages: 5,
-  order: 'ASC', // ASC, DESC, MIXED
-  repeat: 0,
-  quality: 100,
-  delay: 500,
-  imageName: 'preview.gif',
-}
-
 module.exports = {
   format,
   baseUri,
@@ -119,7 +92,4 @@ module.exports = {
   text,
   namePrefix,
   network,
-  solanaMetadata,
-  gif,
-  preview_gif,
 }
