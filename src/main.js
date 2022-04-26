@@ -13,6 +13,7 @@ const {
   uniqueDnaTorrance,
   layerConfigurations,
   defaultGenerationConfig,
+  skeletonColorMatching,
   rarityDelimiter,
   shuffleLayerConfigurations,
   debugLogs,
@@ -68,13 +69,21 @@ const cleanName = (_str) => {
     .map((e) => e.charAt(0).toUpperCase() + e.substring(1).toLowerCase())[0]
 }
 
+const getColor = (_str) => {
+  let name = cleanName(_str)
+  skeletonColorMatching.forEach((item) => {
+    if (name === item.name) return item.matchingColor
+  })
+
+  return false
+}
+
 const getElements = (path) => {
   return fs
     .readdirSync(path)
     .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item))
     .map((i, index) => {
       if (i.includes('-')) {
-        console.log(i)
         throw new Error('Layer name can not contain dashes, please fix:', i)
       }
       return {
@@ -82,6 +91,7 @@ const getElements = (path) => {
         name: cleanName(i),
         filename: i,
         path: `${path}${i}`,
+        color: getColor(i),
         weight: getRarityWeight(i),
       }
     })
@@ -265,6 +275,9 @@ const createDna = (_layers) => {
       // subtract the current weight from the random weight until we reach a sub zero value.
       random -= layer.elements[i].weight
       if (random < 0) {
+        if (layer.name === 'Skeleton') {
+          console.log(layer.elements[i])
+        }
         return randNum.push(
           `${layer.elements[i].id}:${layer.elements[i].filename}${
             layer.bypassDNA ? '?bypassDNA=true' : ''
@@ -439,7 +452,6 @@ const startCreating = async () => {
       editionCount <= layerConfigurations[layerConfigIndex].growEditionSizeTo
     ) {
       let newDna = createDna(layers)
-      console.log(layers)
       if (isDnaUnique(dnaList, newDna)) {
         let results = constructLayerToDna(newDna, layers)
         let loadedElements = []

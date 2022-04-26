@@ -12,7 +12,7 @@ const baseUri = 'ipfs://'
 
 const layerConfigurations = [
   {
-    growEditionSizeTo: 5,
+    growEditionSizeTo: 3,
     layersOrder: [
       { name: 'Background' },
       { name: 'Skeleton' },
@@ -26,6 +26,37 @@ const layerConfigurations = [
       { name: 'InMouth' },
       { name: 'Beard' },
     ],
+  },
+]
+
+const skeletonColorMatching = [
+  {
+    name: 'Moss',
+    matchingColor: 'green',
+  },
+  {
+    name: 'Camo',
+    matchingColor: 'green',
+  },
+  {
+    name: 'Peeling paint',
+    matchingColor: 'gold',
+  },
+  {
+    name: 'Splatters',
+    matchingColor: 'red',
+  },
+  {
+    name: 'Zombie',
+    matchingColor: 'red',
+  },
+  {
+    name: 'Lava',
+    matchingColor: 'orange',
+  },
+  {
+    name: 'Gold',
+    matchingColor: 'gold',
   },
 ]
 
@@ -251,6 +282,7 @@ module.exports = {
   uniqueDnaTorrance,
   layerConfigurations,
   defaultGenerationConfig,
+  skeletonColorMatching,
   rarityDelimiter,
   preview,
   shuffleLayerConfigurations,

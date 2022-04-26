@@ -7,6 +7,6 @@ const {
 
 ;(() => {
   buildSetup()
-  defaultCreation()
-  //startCreating()
+  //defaultCreation()
+  startCreating()
 })()
