@@ -29,6 +29,173 @@ const layerConfigurations = [
   },
 ]
 
+const defaultGenerationConfig = [
+  {
+    name: 'MAIN',
+    attributes: [
+      {
+        name: 'Skeleton',
+        value: 'Bones',
+      },
+      {
+        name: 'Teeth',
+        value: 'White gold tooth',
+      },
+      {
+        name: 'Eyes',
+        value: 'Base blue',
+      },
+      {
+        name: 'Bandanas',
+        value: 'Black fabric',
+      },
+      {
+        name: 'EyeCover',
+        value: 'Patch 3 gold',
+      },
+      {
+        name: 'Cloths',
+        value: 'Jacket 1 leather dirty jrs gold',
+      },
+      {
+        name: 'Accessories',
+        value: 'Gun beige rusted',
+      },
+      {
+        name: 'Hats',
+        value: 'Pirate 1 black jrs',
+      },
+      {
+        name: 'InMouth',
+        value: 'Cigar',
+      },
+    ],
+  },
+  {
+    name: 'JACKY',
+    attributes: [
+      {
+        name: 'Skeleton',
+        value: 'Burned',
+      },
+      {
+        name: 'Teeth',
+        value: 'White red tooth',
+      },
+      {
+        name: 'Eyes',
+        value: 'Snake red',
+      },
+      {
+        name: 'Bandanas',
+        value: null,
+      },
+      {
+        name: 'EyeCover',
+        value: 'Glasses gold',
+      },
+      {
+        name: 'Cloths',
+        value: 'Jacket 2 fabric black red jrs shirt grey',
+      },
+      {
+        name: 'Accessories',
+        value: 'Katana gold red',
+      },
+      {
+        name: 'Hats',
+        value: 'Samurai black red',
+      },
+      {
+        name: 'InMouth',
+        value: null,
+      },
+    ],
+  },
+  {
+    name: 'BRITISH',
+    attributes: [
+      {
+        name: 'Skeleton',
+        value: 'Oil stains',
+      },
+      {
+        name: 'Teeth',
+        value: 'White',
+      },
+      {
+        name: 'Eyes',
+        value: 'Diamonds blue',
+      },
+      {
+        name: 'Bandanas',
+        value: 'Purple fabric',
+      },
+      {
+        name: 'EyeCover',
+        value: 'Patch 1 black blue gems',
+      },
+      {
+        name: 'Cloths',
+        value: 'Jacket 1 fabric blue',
+      },
+      {
+        name: 'Accessories',
+        value: 'Dagger gold jrs',
+      },
+      {
+        name: 'Hats',
+        value: 'Privateer fabric navy gold jrs hair',
+      },
+      {
+        name: 'InMouth',
+        value: 'Cigario',
+      },
+    ],
+  },
+  {
+    name: 'VIKING',
+    attributes: [
+      {
+        name: 'Skeleton',
+        value: 'Rock 2',
+      },
+      {
+        name: 'Teeth',
+        value: 'Cracked 1',
+      },
+      {
+        name: 'Eyes',
+        value: 'Base brown',
+      },
+      {
+        name: 'Bandanas',
+        value: null,
+      },
+      {
+        name: 'EyeCover',
+        value: 'Patch 1 brown',
+      },
+      {
+        name: 'Cloths',
+        value: 'Shirt fur',
+      },
+      {
+        name: 'Accessories',
+        value: 'Dagger rusted',
+      },
+      {
+        name: 'Hats',
+        value: 'Viking rusted',
+      },
+      {
+        name: 'InMouth',
+        value: 'Cigarette',
+      },
+    ],
+  },
+]
+
 const shuffleLayerConfigurations = false
 
 const debugLogs = false
@@ -83,6 +250,7 @@ module.exports = {
   background,
   uniqueDnaTorrance,
   layerConfigurations,
+  defaultGenerationConfig,
   rarityDelimiter,
   preview,
   shuffleLayerConfigurations,

@@ -12,6 +12,7 @@ const {
   background,
   uniqueDnaTorrance,
   layerConfigurations,
+  defaultGenerationConfig,
   rarityDelimiter,
   shuffleLayerConfigurations,
   debugLogs,
@@ -20,13 +21,19 @@ const {
   namePrefix,
   network,
 } = require(`${basePath}/src/config.js`)
+
+// Constants
+const DNA_DELIMITER = '-'
+
+// Canvas setup
 const canvas = createCanvas(format.width, format.height)
 const ctx = canvas.getContext('2d')
 ctx.imageSmoothingEnabled = format.smoothing
+
+// Default attributes
 var metadataList = []
 var attributesList = []
 var dnaList = new Set()
-const DNA_DELIMITER = '-'
 
 const buildSetup = () => {
   if (fs.existsSync(buildDir)) {
@@ -147,11 +154,13 @@ const addAttributes = (_element) => {
 const loadLayerImg = async (_layer) => {
   try {
     return new Promise(async (resolve) => {
-      const image = await loadImage(`${_layer.selectedElement.path}`)
+      const image = await loadImage(
+        `${_layer.selectedElement ? _layer.selectedElement.path : _layer.path}`,
+      )
       resolve({ layer: _layer, loadedImage: image })
     })
   } catch (error) {
-    console.error('Error loading image:', error)
+    console.error('Error loading image for random gen.:', error)
   }
 }
 
@@ -185,7 +194,7 @@ const drawElement = (_renderObject, _index, _layersLen) => {
 }
 
 const constructLayerToDna = (_dna = '', _layers = []) => {
-  let mappedDnaToLayers = _layers.map((layer, index) => {
+  return _layers.map((layer, index) => {
     let selectedElement = layer.elements.find(
       (e) => e.id == cleanDna(_dna.split(DNA_DELIMITER)[index]),
     )
@@ -196,7 +205,6 @@ const constructLayerToDna = (_dna = '', _layers = []) => {
       selectedElement: selectedElement,
     }
   })
-  return mappedDnaToLayers
 }
 
 /**
@@ -274,11 +282,12 @@ const writeMetaData = (_data) => {
 
 const saveMetaDataSingleFile = (_editionCount) => {
   let metadata = metadataList.find((meta) => meta.edition == _editionCount)
-  debugLogs
-    ? console.log(
-        `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`,
-      )
-    : null
+
+  if (debugLogs)
+    console.log(
+      `Writing metadata for ${_editionCount}: ${JSON.stringify(metadata)}`,
+    )
+
   fs.writeFileSync(
     `${buildDir}/json/${_editionCount}.json`,
     JSON.stringify(metadata, null, 2),
@@ -299,6 +308,111 @@ function shuffle(array) {
   return array
 }
 
+const defaultCreation = async () => {
+  let defaultAttributes = [[], [], [], [], [], [], [], [], []]
+
+  defaultGenerationConfig.forEach((item) => {
+    // Skeleton
+    defaultAttributes[0].push(
+      getElements(`${layersDir}/Skeleton/`).filter(
+        (dirSkeleton) => dirSkeleton.name === item.attributes[0].value,
+      )[0],
+    )
+
+    // Teeth
+    defaultAttributes[1].push(
+      getElements(`${layersDir}/Teeth/`).filter(
+        (dirTeeth) => dirTeeth.name === item.attributes[1].value,
+      )[0],
+    )
+
+    // Eyes
+    defaultAttributes[2].push(
+      getElements(`${layersDir}/Eyes/`).filter(
+        (dirEyes) => dirEyes.name === item.attributes[2].value,
+      )[0],
+    )
+
+    // Bandanas
+    defaultAttributes[3].push(
+      getElements(`${layersDir}/Bandanas/`).filter(
+        (dirBand) => dirBand.name === item.attributes[3].value,
+      )[0],
+    )
+
+    // Eye Cover
+    defaultAttributes[4].push(
+      getElements(`${layersDir}/EyeCover/`).filter(
+        (dirEyeCover) => dirEyeCover.name === item.attributes[4].value,
+      )[0],
+    )
+
+    // Cloths
+    defaultAttributes[5].push(
+      getElements(`${layersDir}/Cloths/`).filter(
+        (dirCloths) => dirCloths.name === item.attributes[5].value,
+      )[0],
+    )
+
+    // Accessories
+    defaultAttributes[6].push(
+      getElements(`${layersDir}/Accessories/`).filter(
+        (dirAcces) => dirAcces.name === item.attributes[6].value,
+      )[0],
+    )
+
+    // Hats
+    defaultAttributes[7].push(
+      getElements(`${layersDir}/Hats/`).filter(
+        (dirHats) => dirHats.name === item.attributes[7].value,
+      )[0],
+    )
+
+    // In Mouth
+    defaultAttributes[8].push(
+      getElements(`${layersDir}/InMouth/`).filter(
+        (dirMouth) => dirMouth.name === item.attributes[8].value,
+      )[0],
+    )
+  })
+
+  let defaultNFT = []
+  let count = 0
+
+  while (count != 4) {
+    for (
+      let attributes = 0;
+      attributes < defaultAttributes.length;
+      attributes++
+    ) {
+      const layer = defaultAttributes[attributes][count]
+      if (layer)
+        defaultNFT.push(loadLayerImg(defaultAttributes[attributes][count]))
+    }
+
+    await Promise.all(defaultNFT).then((renderObjectArray) => {
+      if (debugLogs) console.log('Clearing canvas')
+
+      ctx.clearRect(0, 0, format.width, format.height)
+
+      renderObjectArray.forEach((renderObject, index) => {
+        ctx.drawImage(
+          renderObject.loadedImage,
+          0,
+          0,
+          format.width,
+          format.height,
+        )
+      })
+
+      saveImage(`default_${count}`)
+    })
+
+    count++
+    defaultNFT = []
+  }
+}
+
 const startCreating = async () => {
   let layerConfigIndex = 0
   let editionCount = 1
@@ -314,7 +428,9 @@ const startCreating = async () => {
   if (shuffleLayerConfigurations) {
     abstractedIndexes = shuffle(abstractedIndexes)
   }
-  debugLogs ? console.log('Editions left to create: ', abstractedIndexes) : null
+
+  if (debugLogs) console.log('Editions left to create: ', abstractedIndexes)
+
   while (layerConfigIndex < layerConfigurations.length) {
     const layers = layersSetup(
       layerConfigurations[layerConfigIndex].layersOrder,
@@ -323,6 +439,7 @@ const startCreating = async () => {
       editionCount <= layerConfigurations[layerConfigIndex].growEditionSizeTo
     ) {
       let newDna = createDna(layers)
+      console.log(layers)
       if (isDnaUnique(dnaList, newDna)) {
         let results = constructLayerToDna(newDna, layers)
         let loadedElements = []
@@ -378,4 +495,4 @@ const startCreating = async () => {
   writeMetaData(JSON.stringify(metadataList, null, 2))
 }
 
-module.exports = { startCreating, buildSetup, getElements }
+module.exports = { defaultCreation, startCreating, buildSetup, getElements }
