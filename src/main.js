@@ -71,9 +71,11 @@ const cleanName = (_str) => {
 
 const getColor = (_str) => {
   let name = cleanName(_str)
-  skeletonColorMatching.forEach((item) => {
-    if (name === item.name) return item.matchingColor
-  })
+
+  for (let i = 0; i < skeletonColorMatching.length; i++) {
+    if (skeletonColorMatching[i].name === name)
+      return skeletonColorMatching[i].matchingColor
+  }
 
   return false
 }
@@ -263,21 +265,26 @@ const isDnaUnique = (_DnaList = new Set(), _dna = '') => {
 }
 
 const createDna = (_layers) => {
+  var matchingColor = null
   let randNum = []
   _layers.forEach((layer) => {
     var totalWeight = 0
     layer.elements.forEach((element) => {
+      if (element.name.includes(matchingColor)) {
+        console.log('Match found, updating weight of it...')
+        element.weight += 10
+      }
       totalWeight += element.weight
     })
     // number between 0 - totalWeight
     let random = Math.floor(Math.random() * totalWeight)
     for (var i = 0; i < layer.elements.length; i++) {
       // subtract the current weight from the random weight until we reach a sub zero value.
+
       random -= layer.elements[i].weight
       if (random < 0) {
-        if (layer.name === 'Skeleton') {
-          console.log(layer.elements[i])
-        }
+        // Save main layer color
+        if (layer.name === 'Skeleton') matchingColor = layer.elements[i].color
         return randNum.push(
           `${layer.elements[i].id}:${layer.elements[i].filename}${
             layer.bypassDNA ? '?bypassDNA=true' : ''
