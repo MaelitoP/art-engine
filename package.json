@@ -21,7 +21,10 @@
     "preview_gif": "node utils/preview_gif.js",
     "generate_metadata": "node utils/generate_metadata.js"
   },
-  "author": "Maël LE PETIT",
+  "authors": [
+    "HashLips",
+    "Maël LE PETIT",
+  ],
   "license": "MIT",
   "dependencies": {
     "canvas": "^2.8.0",
