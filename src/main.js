@@ -271,7 +271,6 @@ const createDna = (_layers) => {
     var totalWeight = 0
     layer.elements.forEach((element) => {
       if (element.name.includes(matchingColor)) {
-        console.log('Match found, updating weight of it...')
         element.weight += 10
       }
       totalWeight += element.weight
@@ -415,7 +414,7 @@ const defaultCreation = async () => {
 
       ctx.clearRect(0, 0, format.width, format.height)
 
-      renderObjectArray.forEach((renderObject, index) => {
+      renderObjectArray.forEach((renderObject) => {
         ctx.drawImage(
           renderObject.loadedImage,
           0,
@@ -433,11 +432,28 @@ const defaultCreation = async () => {
   }
 }
 
+const genRandomNumberArray = (maxLimit = 4837) => {
+  let arr = []
+  let itr = 0
+
+  while (itr !== 5) {
+    let index = Math.floor(Math.random() * maxLimit)
+    if (!arr.includes(index)) {
+      arr.push(index)
+      itr++
+    }
+  }
+  return arr
+}
+
 const startCreating = async () => {
   let layerConfigIndex = 0
   let editionCount = 1
   let failedCount = 0
   let abstractedIndexes = []
+  let extraLayerIndex = genRandomNumberArray()
+  let extraLayerData = getElements(`${layersDir}/Extra/`)
+
   for (
     let i = network == NETWORK.sol ? 0 : 1;
     i <= layerConfigurations[layerConfigurations.length - 1].growEditionSizeTo;
@@ -466,6 +482,13 @@ const startCreating = async () => {
         results.forEach((layer) => {
           loadedElements.push(loadLayerImg(layer))
         })
+
+        let randomNbr = dnaList.length + 1
+        if (extraLayerIndex.includes(randomNbr)) {
+          let layerIndex = extraLayerIndex.indexOf(randomNbr)
+          console.log(extraLayerData[layerIndex])
+          loadedElements.push(extraLayerData[layerIndex])
+        }
 
         await Promise.all(loadedElements).then((renderObjectArray) => {
           if (debugLogs) console.log('Clearing canvas')
@@ -514,4 +537,9 @@ const startCreating = async () => {
   writeMetaData(JSON.stringify(metadataList, null, 2))
 }
 
-module.exports = { defaultCreation, startCreating, buildSetup, getElements }
+module.exports = {
+  defaultCreation,
+  startCreating,
+  buildSetup,
+  getElements,
+}

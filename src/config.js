@@ -10,9 +10,10 @@ const namePrefix = 'JRS'
 const description = "Generated JRS Collection of 4848 NFT's"
 const baseUri = 'ipfs://'
 
+// TODO - build 4836 Random NFT
 const layerConfigurations = [
   {
-    growEditionSizeTo: 4836,
+    growEditionSizeTo: 3,
     layersOrder: [
       { name: 'Background' },
       { name: 'Skeleton' },
