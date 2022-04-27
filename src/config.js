@@ -13,7 +13,7 @@ const baseUri = 'ipfs://'
 // TODO - build 4836 Random NFT
 const layerConfigurations = [
   {
-    growEditionSizeTo: 3,
+    growEditionSizeTo: 4836,
     layersOrder: [
       { name: 'Background' },
       { name: 'Skeleton' },
