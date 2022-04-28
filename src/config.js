@@ -276,7 +276,6 @@ module.exports = {
   debugLogs,
   extraMetadata,
   pixelFormat,
-  text,
   namePrefix,
   network,
 }
