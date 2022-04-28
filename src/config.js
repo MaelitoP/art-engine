@@ -1,5 +1,4 @@
 const basePath = process.cwd()
-const { MODE } = require(`${basePath}/constants/blend_mode.js`)
 const { NETWORK } = require(`${basePath}/constants/network.js`)
 
 // Catch Network type for metadata
@@ -236,19 +235,6 @@ const format = {
   width: 4000,
   height: 4000,
   smoothing: false,
-}
-
-const text = {
-  only: false,
-  color: '#ffffff',
-  size: 20,
-  xGap: 40,
-  yGap: 40,
-  align: 'left',
-  baseline: 'top',
-  weight: 'regular',
-  family: 'Courier',
-  spacer: ' => ',
 }
 
 const pixelFormat = {
