@@ -1,5 +1,6 @@
-const { NETWORK } = require(`${basePath}/constants/network.js`)
 const basePath = process.cwd()
+const { NETWORK } = require(`${basePath}/constants/network.js`)
+
 
 // Catch Network type for metadata
 const network = NETWORK.eth
