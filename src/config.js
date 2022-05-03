@@ -1,7 +1,6 @@
 const basePath = process.cwd()
 const { NETWORK } = require(`${basePath}/constants/network.js`)
 
-
 // Catch Network type for metadata
 const network = NETWORK.eth
 
@@ -14,6 +13,8 @@ const baseUri = 'ipfs://'
  * Layer configuration.
  *  - Set random generation size
  *  - Layers order
+ *
+ *  TODO: Create 4836 Gen
  */
 const layerConfigurations = [
   {

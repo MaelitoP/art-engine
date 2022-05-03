@@ -176,31 +176,10 @@ const loadLayerImg = async (_layer) => {
   }
 }
 
-const addText = (_sig, x, y, size) => {
-  ctx.fillStyle = text.color
-  ctx.font = `${text.weight} ${size}pt ${text.family}`
-  ctx.textBaseline = text.baseline
-  ctx.textAlign = text.align
-  ctx.fillText(_sig, x, y)
-}
-
 const drawElement = (_renderObject, _index, _layersLen) => {
   ctx.globalAlpha = _renderObject.layer.opacity
   ctx.globalCompositeOperation = _renderObject.layer.blend
-  text.only
-    ? addText(
-        `${_renderObject.layer.name}${text.spacer}${_renderObject.layer.selectedElement.name}`,
-        text.xGap,
-        text.yGap * (_index + 1),
-        text.size,
-      )
-    : ctx.drawImage(
-        _renderObject.loadedImage,
-        0,
-        0,
-        format.width,
-        format.height,
-      )
+  ctx.drawImage(_renderObject.loadedImage, 0, 0, format.width, format.height)
 
   addAttributes(_renderObject)
 }
