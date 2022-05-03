@@ -48,10 +48,11 @@ layerConfigurations.forEach((config) => {
 data.forEach((element) => {
   let attributes = element.attributes
   attributes.forEach((attribute) => {
-    let traitType = attribute.trait_type
+    let traitType = attribute.name
     let value = attribute.value
 
     let rarityDataTraits = rarityData[traitType]
+
     rarityDataTraits.forEach((rarityDataTrait) => {
       if (rarityDataTrait.trait == value) {
         // keep track of occurrences

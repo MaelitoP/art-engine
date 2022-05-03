@@ -1,10 +1,12 @@
 const basePath = process.cwd()
-const { NETWORK } = require(`${basePath}/constants/network.js`)
+
 const fs = require('fs')
 const sha1 = require(`${basePath}/node_modules/sha1`)
 const { createCanvas, loadImage } = require(`${basePath}/node_modules/canvas`)
+
 const buildDir = `${basePath}/build`
 const layersDir = `${basePath}/layers`
+
 const {
   format,
   baseUri,
@@ -18,9 +20,7 @@ const {
   shuffleLayerConfigurations,
   debugLogs,
   extraMetadata,
-  text,
   namePrefix,
-  network,
 } = require(`${basePath}/src/config.js`)
 
 // Constants
@@ -455,7 +455,7 @@ const startCreating = async () => {
   let extraLayerData = getElements(`${layersDir}/Extra/`)
 
   for (
-    let i = network == NETWORK.sol ? 0 : 1;
+    let i = 1;
     i <= layerConfigurations[layerConfigurations.length - 1].growEditionSizeTo;
     i++
   ) {

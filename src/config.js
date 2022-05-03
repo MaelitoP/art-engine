@@ -1,6 +1,6 @@
 const basePath = process.cwd()
-const { MODE } = require(`${basePath}/constants/blend_mode.js`)
 const { NETWORK } = require(`${basePath}/constants/network.js`)
+
 
 // Catch Network type for metadata
 const network = NETWORK.eth
@@ -10,7 +10,11 @@ const namePrefix = 'JRS'
 const description = "Generated JRS Collection of 4848 NFT's"
 const baseUri = 'ipfs://'
 
-// TODO - build 4836 Random NFT
+/**
+ * Layer configuration.
+ *  - Set random generation size
+ *  - Layers order
+ */
 const layerConfigurations = [
   {
     growEditionSizeTo: 4836,
@@ -30,6 +34,10 @@ const layerConfigurations = [
   },
 ]
 
+/**
+ * Set matching color with
+ * first layer generation
+ */
 const skeletonColorMatching = [
   {
     name: 'Moss',
@@ -61,6 +69,10 @@ const skeletonColorMatching = [
   },
 ]
 
+/**
+ * Setup default generation by
+ * set up fix NFT with attributes
+ */
 const defaultGenerationConfig = [
   {
     name: 'MAIN',
@@ -228,33 +240,29 @@ const defaultGenerationConfig = [
   },
 ]
 
+// Randomize layers order
 const shuffleLayerConfigurations = false
 
+// Print debug message
 const debugLogs = false
 
+/**
+ * Output dimension
+ */
 const format = {
   width: 4000,
   height: 4000,
   smoothing: false,
 }
 
-const text = {
-  only: false,
-  color: '#ffffff',
-  size: 20,
-  xGap: 40,
-  yGap: 40,
-  align: 'left',
-  baseline: 'top',
-  weight: 'regular',
-  family: 'Courier',
-  spacer: ' => ',
-}
-
+/**
+ * 4K Resolution format
+ */
 const pixelFormat = {
   ratio: 16 / 9,
 }
 
+// Generate random background or not
 const background = {
   generate: false,
   brightness: '80%',
@@ -264,10 +272,15 @@ const background = {
 
 const extraMetadata = {}
 
+// String delimiter to set rarity %
 const rarityDelimiter = '#'
 
 const uniqueDnaTorrance = 10000
 
+/**
+ * Settings for preview command
+ * @see preview.js file
+ */
 const preview = {
   thumbPerRow: 5,
   thumbWidth: 50,
@@ -290,7 +303,6 @@ module.exports = {
   debugLogs,
   extraMetadata,
   pixelFormat,
-  text,
   namePrefix,
   network,
 }
