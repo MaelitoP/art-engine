@@ -8,7 +8,7 @@ function makeStorageClient() {
     return new Web3Storage({ token: token })
 }
 
-async function fileURI(cid) {
+async function UpdateMeta(cid) {
   
   const _client_ = makeStorageClient()
   const _res_ = await _client_.get(cid)
@@ -47,4 +47,4 @@ async function fileURI(cid) {
 }
 
 
-fileURI(process.argv.slice(2)[0])
+UpdateMeta(process.argv.slice(2)[0])

@@ -55,7 +55,7 @@ async function storeFiles(folder_name, to_save) {
 
         finaldictio['cid'] = cid
 
-        fs.writeFileSync(`./build/${folder_name}/cid_info.json`, JSON.stringify(finaldictio), function(err) {
+        fs.writeFileSync(`./${folder_name}/cid_info.json`, JSON.stringify(finaldictio), function(err) {
             if (err) throw err;
         });
 
