@@ -14,7 +14,9 @@
   "scripts": {
     "build": "node --max_old_space_size=10240 index.js",
     "generate": "node index.js",
-    "upload_images": "node src/upload.js",
+    "upload_images": "node src/upload.js build/images false",
+    "update_meta": "node src/setmetadata.js <cid_images>",
+    "upload_meta": "node src/upload.js build/json true",
     "rarity": "node utils/rarity.js",
     "preview": "node utils/preview.js",
     "update_info": "node utils/update_info.js",
