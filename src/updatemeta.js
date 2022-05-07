@@ -27,8 +27,7 @@ async function UpdateMeta(cid) {
     const repo = `./build/json/${meta}.json`
     
     const jsonEx = JSON.parse(fs.readFileSync(repo, 'utf8'));
-
-    jsonEx['image'] = `https://${file.cid}.ipfs.dweb.link/`
+    jsonEx['image'] = `https://ipfs.io/ipfs/${file.cid}`
 
     fs.writeFileSync(repo, JSON.stringify(jsonEx), function(err) {
       if (err) throw err;
