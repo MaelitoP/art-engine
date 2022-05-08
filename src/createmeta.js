@@ -32,10 +32,10 @@ async function CreateMeta(cid) {
 
     for (const file of allfiles) {
     
-        const meta = file._name.replace(/\D+/g, '')
+        const meta = file._name.replace(/\D+/g, '').substring(1).slice(0, -1)
         const repo = `./extra/json/${meta}.json`
         
-        vip_meta['animation_url'] = `https://${file.cid}.ipfs.dweb.link/`
+        vip_meta['animation_url'] = `https://ipfs.io/ipfs/${file.cid}`
         vip_meta['name'] = 'JRS VIP #' + meta
 
         fs.writeFileSync(repo, JSON.stringify(vip_meta), function(err) {

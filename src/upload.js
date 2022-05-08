@@ -49,7 +49,7 @@ async function storeFiles(folder_name, to_save) {
             const filename2 = file._name.replace(`/\D+/g`, '')
             const name2 = 'meta' + filename2 
 
-            finaldictio[name2] = `https://${file.cid}.ipfs.dweb.link/`
+            finaldictio[name2] = `https://ipfs.io/ipfs/${file.cid}`
 
         }
 
