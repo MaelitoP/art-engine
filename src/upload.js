@@ -2,7 +2,7 @@ var { getFilesFromPath, Web3Storage } =require('web3.storage')
 var fs = require('fs');
 
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEYzNjQ0OEE0QzZDZWZEOTY0OTFkOTcxOEExMGYwNzJmYTY3NUI5RkEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2MzgzOTQzMzIzODgsIm5hbWUiOiJUZXN0IEFQSSJ9.C02Cxzo-52tQT62CeJAK0KiH3kpmIh6_vPa5XrF1BhQ'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDY2YkY5RTU3MkIxZTZCMjREQTgxNTI2NUY0RThDM2YzZTk2OEQ3MDYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTIyMDYwNjM2MjUsIm5hbWUiOiJKUlMifQ.ytRSfkm4vNMZn7wpvzDjVQPEPywQ-IJCZ4WvWwM63jc'
 
 function makeStorageClient() {
     return new Web3Storage({ token: token })
