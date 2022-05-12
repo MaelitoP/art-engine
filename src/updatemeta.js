@@ -24,7 +24,7 @@ async function UpdateMeta(cid) {
   for (const file of allfiles) {
     
     const meta = file._name.replace(/\D+/g, '')
-    const repo = `./build/json/${meta}.json`
+    const repo = `./extra/json/${meta}.json`
     
     const jsonEx = JSON.parse(fs.readFileSync(repo, 'utf8'));
     jsonEx['image'] = `https://ipfs.io/ipfs/${file.cid}`
