@@ -22,20 +22,25 @@ async function UpdateMeta(cid) {
   const final_list = []
 
   for (const file of allfiles) {
+
+
+    const _res_ = await _client_.get(file.cid)
+    console.log(_res_)
+
+
+    // const meta = file._name.replace(/\D+/g, '')
+    // const repo = `./extra/json/${meta}.json`
     
-    const meta = file._name.replace(/\D+/g, '')
-    const repo = `./extra/json/${meta}.json`
-    
-    const jsonEx = JSON.parse(fs.readFileSync(repo, 'utf8'));
-    jsonEx['image'] = `https://ipfs.io/ipfs/${file.cid}`
+    // const jsonEx = JSON.parse(fs.readFileSync(repo, 'utf8'));
+    // jsonEx['image'] = `https://ipfs.io/ipfs/${file.cid}`
 
-    fs.writeFileSync(repo, JSON.stringify(jsonEx), function(err) {
-      if (err) throw err;
-    });
+    // fs.writeFileSync(repo, JSON.stringify(jsonEx), function(err) {
+    //   if (err) throw err;
+    // });
 
-    final_list.push(jsonEx)
+    // final_list.push(jsonEx)
 
-    console.log(`Meta data completed : ${repo}`)
+    // console.log(`Meta data completed : ${repo}`)
   }
 
   

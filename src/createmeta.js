@@ -35,10 +35,15 @@ async function CreateMeta(cid) {
         
     
         const meta = file._name.replace(/\D+/g, '').substring(1).slice(0, -1)
-        const repo = `./extra/json/${meta}.json`
+
+        if(meta.charAt(0) === '0'){
+            meta = meta.substring(1);
+        }
         
         vip_meta['animation_url'] = `https://ipfs.io/ipfs/${file.cid}`
-        vip_meta['name'] = 'JRS VIP #' + meta
+        vip_meta['name'] = 'JRS VIP PASS ' + meta + " / 88"
+
+        const repo = `./extra/json/${meta}`
 
         fs.writeFileSync(repo, JSON.stringify(vip_meta), function(err) {
           if (err) throw err;

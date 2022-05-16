@@ -18,7 +18,6 @@
     "update_meta": "node src/updatemeta.js <cid_images>",
     "upload_images": "node src/upload.js build/images false",
     "upload_meta": "node src/upload.js build/json true",
-
     "rarity": "node utils/rarity.js",
     "preview": "node utils/preview.js",
     "update_info": "node utils/update_info.js",
@@ -30,6 +29,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.27.2",
     "canvas": "^2.8.0",
     "gif-encoder-2": "^1.0.5",
     "sha1": "^1.1.1",
