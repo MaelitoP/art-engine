@@ -17,13 +17,11 @@ async function UpdateMeta() {
         const res = await axios.get(data[file]);
         const newdata = res.data
 
-        const new_name = newdata['name'].replace(/\D+/g, '')
+        const new_name = file.replace(/\D+/g, '')
 
-        const original_name = parseInt(new_name)
+        newdata['name'] = newdata['name'].replace(' PASS', '')
 
-        newdata['name'] = 'JRS VIP PASS ' + new_name + " / 88"
-
-        const repo = `./extra/json/${original_name}`
+        const repo = `./extra/json/${new_name}`
 
         fs.writeFileSync(repo, JSON.stringify(newdata), function(err) {
             if (err) throw err;
