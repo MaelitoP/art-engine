@@ -41,7 +41,7 @@ async function CreateMeta(cid) {
         }
         
         vip_meta['animation_url'] = `https://ipfs.io/ipfs/${file.cid}`
-        vip_meta['name'] = 'JRS VIP PASS ' + meta + " / 88"
+        vip_meta['name'] = 'JRS VIP ' + meta + "/88"
 
         const repo = `./extra/json/${meta}`
 

@@ -25,7 +25,8 @@ async function UpdateMeta(cid) {
 
 
     const _res_ = await _client_.get(file.cid)
-    console.log(_res_)
+    const data = await _res_.files()
+    console.log(data)
 
 
     // const meta = file._name.replace(/\D+/g, '')

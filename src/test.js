@@ -19,15 +19,16 @@ async function UpdateMeta() {
 
         const new_name = file.replace(/\D+/g, '')
 
+        newdata['name'] = newdata['name'].replace(' / ', '/')
         newdata['name'] = newdata['name'].replace(' PASS', '')
-
-        const repo = `./extra/json/${new_name}`
+        newdata['description'] = "Very Important Pirate"
+        const repo = `./extra/jsonnew/${new_name}`
 
         fs.writeFileSync(repo, JSON.stringify(newdata), function(err) {
             if (err) throw err;
         });
 
-        await sleep(1000)
+        await sleep(2000)
 
     }
 
