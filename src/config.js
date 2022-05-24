@@ -18,7 +18,7 @@ const baseUri = 'ipfs://'
  */
 const layerConfigurations = [
   {
-    growEditionSizeTo: 20,
+    growEditionSizeTo: 4848,
     layersOrder: [
       { name: 'Background' },
       { name: 'Skeleton' },
